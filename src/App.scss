@@ -8,9 +8,13 @@ body{
 .MuiBadge-root{
     width: 100%;
 }
-.MuiPaper-root{
-    width: 100%;
+
+.filmGrid{
+    .MuiPaper-root{
+        width: 100%;
+    }
 }
+
 
 .MuiSlider-thumb{
     display: none !important;
@@ -29,6 +33,21 @@ body{
 .trailer_poster:hover {
     cursor: pointer;
 }
+.sort_wrapper{
+    display:flex;
+    justify-content: space-between;
+}
+
+.css-6hp17o-MuiList-root-MuiMenu-list{
+    padding-top: 0px !important;
+}
 .MuiAutocomplete-paper{
     background-color: #000a12;
+}
+
+.search_item_wrapper{
+    p{
+        padding: 0;
+        margin: 0;
+    }
 }

@@ -1,14 +1,11 @@
 /* eslint-disable no-unused-vars */
 import '../../App.scss';
-import { Button, Typography, Toolbar, Box, AppBar, styled, alpha, Autocomplete, TextField} from '@mui/material';
+import { Button, Typography, Toolbar, Box, AppBar, styled, alpha, Autocomplete, TextField, Avatar} from '@mui/material';
 import { Container } from '@mui/system';
 import { useSelector } from "react-redux"
 import { useNavigate } from 'react-router';
 import { useState, useEffect } from 'react';
-import { Link } from 'react-router-dom';
-import { useDispatch } from 'react-redux';
-import MainPage from '../../pages/MainPage';
-// import CustomButton from '../customButton/CustomButton';
+
 
 const SearchAppBarButton = styled(Button)(({ theme }) => ({
   borderRadius: theme.shape.borderRadius,
@@ -26,6 +23,7 @@ const SearchAppBarButton = styled(Button)(({ theme }) => ({
 
 const StyledSerch = styled(Autocomplete)(({ theme }) => ({
     borderRadius: theme.shape.borderRadius,
+    backgroundColor:theme.palette.divider,
     '&:hover': {
       backgroundColor: alpha(theme.palette.common.white, 0.1),
     },
@@ -34,21 +32,19 @@ const StyledSerch = styled(Autocomplete)(({ theme }) => ({
       marginLeft: theme.spacing(1),
       width: 'auto',
     },
-    '.MuiAutocomplete-listbox':{
-        backgroundColor:'#d74d31'
-    }
-
 }));
+
 
 export default function SearchAppBar() {
     const {films} = useSelector(state => state.films);
     const navigate = useNavigate();
-    const [searchValue, setSearchValue] = useState(null);
+    const [searchValue, setSearchValue] = useState('');
     
     useEffect(()=> {
         films.forEach((element,index) => {
-            if(element.title === searchValue){
+            if(element.title === searchValue.title){
                 navigate(`/films/${index+1}`)
+                setSearchValue('')
             }
         });
     }, [searchValue])
@@ -70,18 +66,27 @@ export default function SearchAppBar() {
             <SearchAppBarButton>Премьеры</SearchAppBarButton>
             <SearchAppBarButton>Лучшие 250</SearchAppBarButton>
             <StyledSerch
-                style={{width:'300px'}}
+                style={{width:'320px'}}
                 size='small'
                 noOptionsText='Ничего не найдено'
                 id="free-solo-2-demo"
+                limitTags={3}
                 value={searchValue}
                 onChange={(event, newValue) => setSearchValue(newValue)}
                 disableClearable
-                options={films.map((option) => option.title)}
-                // onOpen={
-                //     event.defaultMuiPrevented = true;
-                //     navigate("/films/2")
-                // }
+                options={films}
+                getOptionLabel={(option) => option.title || ""}
+                isOptionEqualToValue={(option, value) => option.value === value.value}
+                renderOption={(props, option) => (
+                    <Box className='search_content' sx={{width:'100%', height:'90px', color:'#fffff', display:'flex'}} {...props}>
+                      <Avatar variant="rounded" src={option.img}/>
+                      <div className='search_item_wrapper' style={{marginLeft:'20px'}}>
+                      <Typography fontFamily={'Roboto Condensed'} fontSize={10} style={{opacity:"0.5"}}>{option.year}</Typography>
+                        <Typography>{option.title}</Typography>
+                        <Typography fontFamily={'Roboto Condensed'} fontSize={10} style={{opacity:"0.5"}}>{option.genre}, {option.rating}</Typography>
+                      </div>
+                    </Box>
+                  )}
                 renderInput={(params) => (
                 <TextField
                     {...params}
