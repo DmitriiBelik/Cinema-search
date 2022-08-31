@@ -4,6 +4,12 @@ import { Link} from "react-router-dom"
 
 
 export default function BreadCrumbs({category, title}) {
+    let adress = '';
+    if(category == 'Фильмы'){
+        adress = '/'
+    } else{
+        adress = '/serials'
+    }
   return (
     <div role="presentation" style={{marginBottom:"20px"}}>
         <Breadcrumbs aria-label="breadcrumb">
@@ -12,7 +18,7 @@ export default function BreadCrumbs({category, title}) {
                     Главная
                 </TLink>
             </Link>
-            <Link style={{textDecoration:"none"}} to={`/`}>
+            <Link style={{textDecoration:"none"}} to={adress}>
                 <TLink component={'div'}
                 underline="hover"
                 color="primary"

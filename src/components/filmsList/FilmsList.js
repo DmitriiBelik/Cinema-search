@@ -1,14 +1,13 @@
-/* eslint-disable no-unused-vars */
+/* eslint-disable react/prop-types */
 import '../../App.scss';
 import { useEffect, useState } from "react"
 import { Link } from "react-router-dom"
-import useFetchService from "../../services/FetchService"
 import FilmCard from "../filmCard/FIlmCard"
-import { Grid, Alert, CircularProgress, Box, FormControl, InputLabel, Select, MenuItem, styled, alpha} from "@mui/material"
+import { Grid, Box, FormControl, InputLabel, Select, MenuItem, styled} from "@mui/material"
 import { useDispatch, useSelector } from "react-redux"
-import { filmsFetched } from "../../redux/FilmsSlice"
+import { fetchFilms, fetchSerials} from "../../redux/FilmsSlice"
 
-const FilmsList = () => {
+const FilmsList = ({contentName}) => {
     const StyledSelect = styled(Select)(({ theme }) => ({
         backgroundColor: theme.palette.primary.dark,
         width: '100%',
@@ -36,13 +35,12 @@ const FilmsList = () => {
         margin:'0'
     }));
 
+    const dispatch = useDispatch();
+    const {films, serials} = useSelector(state => state.films);
     
-    const {films} = useSelector(state => state.films);
-    const [newFilmsLoading, setNewFilmsLoading] = useState(false);
-    const {loading, error, getAllFilms} = useFetchService();
+    let content = '';
     const [genre, setGenre] = useState('');
     const [sortMethod, setSortMethod] = useState('')
-    const dispatch = useDispatch();
 
     const genreChange = (event) => {
         setGenre(event.target.value);
@@ -52,49 +50,51 @@ const FilmsList = () => {
         setSortMethod(event.target.value);
     };
 
-
     useEffect(() => {
-        onRequest(true);
+        if(contentName =='films'){
+            dispatch(fetchFilms());
+        } else{
+            dispatch(fetchSerials());
+        }
     }, [])
 
     useEffect(() => {
-        const arrayForSort = [...films]
+        if(contentName == 'films'){
+            content = films
+        } else{
+            content = serials
+        }
+        const arrayForSort = [...content]
             switch(sortMethod){
                 case 'rating':
                     arrayForSort.sort((a,b) => b.rating - a.rating);
                     break;
                 case 'year':
                     arrayForSort.sort((a,b) => b.year - a.year);
-                    console.log('year');
+                    console.log(arrayForSort);
                     break;
                 case 'title':
                     arrayForSort.sort((x, y) => x.title.localeCompare(y.title));
                     break;
                 default: 
-                    onRequest(true);
+                dispatch(fetchFilms());
                     break;
             }
-        dispatch(filmsFetched(arrayForSort))
+        if(contentName == 'films'){
+            dispatch(fetchFilms(arrayForSort))
+        } else{
+            dispatch(fetchSerials(arrayForSort))
+        }
     }, [sortMethod])
 
-    const onRequest = (initial) => {
-        initial ? setNewFilmsLoading(false) : setNewFilmsLoading(true);
-        getAllFilms()
-            .then(onFilmListLoaded)
-    }
-
-    const onFilmListLoaded = (newFilmList) =>{
-        dispatch(filmsFetched(newFilmList))
-        setNewFilmsLoading(false);
-    }
     
-    function renderItems(arr) {
+    function renderItems(arr, contentName) {
         const items = arr.filter(item => {
             return item.genre.indexOf(genre) > -1
         }).map((item,i) => {
             return(
                 <Grid className="filmGrid" key={i} item md={2}>
-                    <Link style={{textDecoration:"none"}} to={`/films/${item.id}`}>
+                    <Link style={{textDecoration:"none"}} to={`/${contentName}/${item.id}`}>
                         <FilmCard 
                             key={item.id}
                             title={item.title}
@@ -124,6 +124,7 @@ const FilmsList = () => {
                         >
                             <StyledItem value={''}>Любой</StyledItem>
                             <StyledItem value={'Драма'}>Драма</StyledItem>
+                            <StyledItem value={'Комедия'}>Комедия</StyledItem>
                             <StyledItem value={'Детектив'}>Детектив</StyledItem>
                             <StyledItem value={'Криминал'}>Криминал</StyledItem>
                             <StyledItem value={'Фантастика'}>Фантастика</StyledItem>
@@ -135,7 +136,7 @@ const FilmsList = () => {
                     <FormControl 
                         fullWidth
                     >
-                        <InputLabel id="demo-simple-select-label">Сортировать по</InputLabel>
+                        <InputLabel id="demo-simple-select-label">Сортировка</InputLabel>
                         <StyledSelect
                             labelId="demo-simple-select-label"
                             id="demo-simple-select"
@@ -157,24 +158,15 @@ const FilmsList = () => {
            </>
         )
     }   
-    const chars = renderItems(films)
-    const errorMessage = error ? <Alert severity="error">This is an error alert — check it out!</Alert> : null;
-    const spinner = loading && !newFilmsLoading ? 
-            <CircularProgress 
-                style={{
-                    margin:"0 auto",
-                    position:"absolute",
-                    top:"0",
-                    bottom:"0",
-                    left:"0",
-                    right:"0"
-                }}/> 
-        : null;
+    let chars = '';
+    if(contentName =='films'){
+        chars = renderItems(films, 'films')
+    } else{
+        chars = renderItems(serials, 'serials')
+    }
 
     return(
         <div style={{position:"relative"}}>
-            {errorMessage}
-            {spinner}
             {chars}
         </div>
     )

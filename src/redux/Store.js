@@ -1,6 +1,7 @@
 /* eslint-disable no-undef */
-import { configureStore } from "@reduxjs/toolkit";
-import films from './FilmsSlice'
+import { configureStore } from '@reduxjs/toolkit';
+import films from '../redux/FilmsSlice'
+
 
 const stringMiddleware = () => (next) => (action) => {
     if (typeof action === 'string') {
@@ -14,7 +15,7 @@ const stringMiddleware = () => (next) => (action) => {
 const store = configureStore({
     reducer: {films},
     middleware: getDefaultMiddleware => getDefaultMiddleware().concat(stringMiddleware),
-    devTools: process.env.NODE_ENV !== 'production'
+    devTools: process.env.NODE_ENV !== 'production',
 })
 
 export default store;

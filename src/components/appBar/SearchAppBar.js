@@ -5,6 +5,7 @@ import { Container } from '@mui/system';
 import { useSelector } from "react-redux"
 import { useNavigate } from 'react-router';
 import { useState, useEffect } from 'react';
+import { NavLink } from "react-router-dom";
 
 
 const SearchAppBarButton = styled(Button)(({ theme }) => ({
@@ -36,7 +37,8 @@ const StyledSerch = styled(Autocomplete)(({ theme }) => ({
 
 
 export default function SearchAppBar() {
-    const {films} = useSelector(state => state.films);
+    const {films, serials} = useSelector(state => state.films);
+    const options = films.concat(serials)
     const navigate = useNavigate();
     const [searchValue, setSearchValue] = useState('');
     
@@ -53,16 +55,16 @@ export default function SearchAppBar() {
         <AppBar sx={{backgroundColor: 'primary.dark'}} style={{position:"fixed"}}>
         <Container style={{paddingLeft:'0', paddingRight:'0'}}>
             <Toolbar>
-            <Typography
-                variant="h6"
-                noWrap
-                component="div"
-                sx={{ flexGrow: 1, display: { xs: 'none', sm: 'block' } }}
-            >
-                КИНО ПАРК
-            </Typography>
-            <SearchAppBarButton color={'primary'}>Фильмы</SearchAppBarButton>
-            <SearchAppBarButton>Сериалы</SearchAppBarButton>
+              <Typography
+                  variant="h6"
+                  noWrap
+                  component="div"
+                  sx={{ flexGrow: 1, display: { xs: 'none', sm: 'block' } }}
+              >
+                  <NavLink to="/">КИНО ПАРК</NavLink>
+              </Typography>
+              <SearchAppBarButton color={'primary'}><NavLink to="/" style={({ isActive }) => ({ color: isActive ? '#c33f49' : 'inherit' })}>Фильмы</NavLink></SearchAppBarButton>
+            <SearchAppBarButton><NavLink to="/serials" style={({ isActive }) => ({ color: isActive ? '#c33f49' : 'inherit' })}>Сериалы</NavLink></SearchAppBarButton>
             <SearchAppBarButton>Премьеры</SearchAppBarButton>
             <SearchAppBarButton>Лучшие 250</SearchAppBarButton>
             <StyledSerch
@@ -74,7 +76,7 @@ export default function SearchAppBar() {
                 value={searchValue}
                 onChange={(event, newValue) => setSearchValue(newValue)}
                 disableClearable
-                options={films}
+                options={options}
                 getOptionLabel={(option) => option.title || ""}
                 isOptionEqualToValue={(option, value) => option.value === value.value}
                 renderOption={(props, option) => (

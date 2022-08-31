@@ -19,7 +19,7 @@ const useFetchService = () => {
     }
 
     const getSerial = async (id) => {
-        const res = await request(`http://localhost:3001/serial/${id}`);
+        const res = await request(`http://localhost:3001/serials/${id}`);
         return _transformFilm(res);
     }
 
@@ -58,7 +58,8 @@ const useFetchService = () => {
             actors: film.actors,
             dubbing: film.dubbing,
             review: film.review,
-            trailerImg: film.trailerImg
+            trailerImg: film.trailerImg,
+            seasons: film.seasons
         }
     }
 
