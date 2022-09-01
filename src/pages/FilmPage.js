@@ -1,5 +1,3 @@
-/* eslint-disable no-unused-vars */
-/* eslint-disable react/prop-types */
 import '../../src/App.scss'
 import { useEffect} from 'react';
 import { useParams } from 'react-router-dom';
@@ -23,7 +21,6 @@ const FilmPage = () => {
     
     useEffect(() => {
         dispatch(fetchFilm(filmId))
-        console.log(loadedFilm)
     }, [filmId])
     
     let content = '';

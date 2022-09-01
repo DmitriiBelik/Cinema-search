@@ -2,10 +2,11 @@
 import '../../App.scss';
 import { Button, Typography, Toolbar, Box, AppBar, styled, alpha, Autocomplete, TextField, Avatar} from '@mui/material';
 import { Container } from '@mui/system';
-import { useSelector } from "react-redux"
+import { useSelector, useDispatch } from "react-redux"
 import { useNavigate } from 'react-router';
 import { useState, useEffect } from 'react';
 import { NavLink } from "react-router-dom";
+import {fetchSerials, fetchFilms} from "../../redux/FilmsSlice"
 
 
 const SearchAppBarButton = styled(Button)(({ theme }) => ({
@@ -37,6 +38,7 @@ const StyledSerch = styled(Autocomplete)(({ theme }) => ({
 
 
 export default function SearchAppBar() {
+    const dispatch = useDispatch();
     const {films, serials} = useSelector(state => state.films);
     const options = films.concat(serials)
     const navigate = useNavigate();
@@ -50,6 +52,11 @@ export default function SearchAppBar() {
             }
         });
     }, [searchValue])
+
+    useEffect(() => {
+      dispatch(fetchSerials())
+      dispatch(fetchFilms())
+    }, [])
     return (
     <Box sx={{ flexGrow: 1}}>
         <AppBar sx={{backgroundColor: 'primary.dark'}} style={{position:"fixed"}}>

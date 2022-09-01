@@ -5,7 +5,7 @@ import { Link } from "react-router-dom"
 import FilmCard from "../filmCard/FIlmCard"
 import { Grid, Box, FormControl, InputLabel, Select, MenuItem, styled} from "@mui/material"
 import { useDispatch, useSelector } from "react-redux"
-import { fetchFilms, fetchSerials} from "../../redux/FilmsSlice"
+import {filmsUpdated, serialsUpdated} from "../../redux/FilmsSlice"
 
 const FilmsList = ({contentName}) => {
     const StyledSelect = styled(Select)(({ theme }) => ({
@@ -50,13 +50,6 @@ const FilmsList = ({contentName}) => {
         setSortMethod(event.target.value);
     };
 
-    useEffect(() => {
-        if(contentName =='films'){
-            dispatch(fetchFilms());
-        } else{
-            dispatch(fetchSerials());
-        }
-    }, [])
 
     useEffect(() => {
         if(contentName == 'films'){
@@ -71,19 +64,15 @@ const FilmsList = ({contentName}) => {
                     break;
                 case 'year':
                     arrayForSort.sort((a,b) => b.year - a.year);
-                    console.log(arrayForSort);
                     break;
                 case 'title':
                     arrayForSort.sort((x, y) => x.title.localeCompare(y.title));
                     break;
-                default: 
-                dispatch(fetchFilms());
-                    break;
             }
         if(contentName == 'films'){
-            dispatch(fetchFilms(arrayForSort))
+            dispatch(filmsUpdated(arrayForSort))
         } else{
-            dispatch(fetchSerials(arrayForSort))
+            dispatch(serialsUpdated(arrayForSort))
         }
     }, [sortMethod])
 
@@ -144,7 +133,6 @@ const FilmsList = ({contentName}) => {
                             label="sortMethod"
                             onChange={sortChange}
                         >
-                            <StyledItem value={''}>Не сортировать</StyledItem>
                             <StyledItem value={'rating'}>По рейтингу</StyledItem>
                             <StyledItem value={'year'}>По дате выхода</StyledItem>
                             <StyledItem value={'title'}>По названию</StyledItem>
