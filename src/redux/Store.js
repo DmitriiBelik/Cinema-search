@@ -1,6 +1,7 @@
 /* eslint-disable no-undef */
 import { configureStore } from '@reduxjs/toolkit';
 import films from '../redux/FilmsSlice'
+import user from '../redux/UserSlice'
 
 
 const stringMiddleware = () => (next) => (action) => {
@@ -13,8 +14,8 @@ const stringMiddleware = () => (next) => (action) => {
 };
 
 const store = configureStore({
-    reducer: {films},
-    middleware: getDefaultMiddleware => getDefaultMiddleware().concat(stringMiddleware),
+    reducer: {films, user},
+    middleware: getDefaultMiddleware => getDefaultMiddleware({serializableCheck: false}).concat(stringMiddleware),
     devTools: process.env.NODE_ENV !== 'production',
 })
 

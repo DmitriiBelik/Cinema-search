@@ -3,7 +3,7 @@ import '../../App.scss';
 import { useEffect, useState } from "react"
 import { Link } from "react-router-dom"
 import FilmCard from "../filmCard/FIlmCard"
-import { Grid, Box, FormControl, InputLabel, Select, MenuItem, styled} from "@mui/material"
+import { Grid, Box, FormControl, InputLabel, Select, MenuItem, styled, Pagination} from "@mui/material"
 import { useDispatch, useSelector } from "react-redux"
 import {filmsUpdated, serialsUpdated} from "../../redux/FilmsSlice"
 
@@ -40,7 +40,13 @@ const FilmsList = ({contentName}) => {
     
     let content = '';
     const [genre, setGenre] = useState('');
-    const [sortMethod, setSortMethod] = useState('')
+    const [sortMethod, setSortMethod] = useState('');
+    const [currentPage, setCurrentPage] = useState(1);
+    const [ItemsPerPage]=useState(12)
+
+    const lastCountryIndex = currentPage * ItemsPerPage;
+    const firstCountryIndex = lastCountryIndex - ItemsPerPage;
+    const pageCount = Math.ceil(films.length/ItemsPerPage);
 
     const genreChange = (event) => {
         setGenre(event.target.value);
@@ -50,6 +56,9 @@ const FilmsList = ({contentName}) => {
         setSortMethod(event.target.value);
     };
 
+    const paginationChange = (event, value) => {
+        setCurrentPage( value)    
+    }
 
     useEffect(() => {
         if(contentName == 'films'){
@@ -57,6 +66,8 @@ const FilmsList = ({contentName}) => {
         } else{
             content = serials
         }
+    },[contentName])    
+    useEffect(() => {
         const arrayForSort = [...content]
             switch(sortMethod){
                 case 'rating':
@@ -148,14 +159,23 @@ const FilmsList = ({contentName}) => {
     }   
     let chars = '';
     if(contentName =='films'){
-        chars = renderItems(films, 'films')
+        const currentItem = films.slice(firstCountryIndex, lastCountryIndex)
+        chars = renderItems(currentItem, 'films')
     } else{
-        chars = renderItems(serials, 'serials')
+        const currentItem = serials.slice(firstCountryIndex, lastCountryIndex)
+        chars = renderItems(currentItem, 'serials')
     }
-
+    let pagination = pageCount > 1 ? <Pagination
+        count={pageCount}
+        variant="outlined"
+        page={currentPage}
+        shape="rounded"
+        onChange={paginationChange}
+    />: ''
     return(
         <div style={{position:"relative"}}>
             {chars}
+            {pagination}
         </div>
     )
     

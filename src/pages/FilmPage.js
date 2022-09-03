@@ -1,6 +1,6 @@
 import '../../src/App.scss'
 import { useEffect} from 'react';
-import { useParams } from 'react-router-dom';
+import { useParams, Link } from 'react-router-dom';
 import CustomButton from '../components/customButton/CustomButton';
 import BasicRating from '../components/basicRating/BasicRating';
 import FilmParametr from '../components/filmParametr/FilmParametr';
@@ -12,11 +12,12 @@ import PlayArrowIcon from '@mui/icons-material/PlayArrow';
 import { Paper, Grid, Typography,Chip, Slider} from '@mui/material';
 import { useDispatch, useSelector } from "react-redux"
 import { fetchFilm } from "../redux/FilmsSlice"
+import FilmCard from '../components/filmCard/FIlmCard';
 
 const FilmPage = () => {
     const dispatch = useDispatch();
     const { LoadingStatus} = useSelector(state => state.films);
-    const {loadedFilm} = useSelector(state => state.films);
+    const {loadedFilm, films} = useSelector(state => state.films);
     const {filmId} = useParams();
     
     useEffect(() => {
@@ -165,6 +166,30 @@ const FilmPage = () => {
                         </Grid>
                     </Grid > 
                     <BasicTabs review={review}/>
+                    <Typography component={'div'} variant="h5" style={{ margin:"20px 0px"}}>
+                        Похожие фильмы
+                    </Typography>
+                    <Grid container spacing={2} rowSpacing={3}>
+                        {
+                            films.filter(item => {
+                                return (item.genre.indexOf(loadedFilm.genre) > -1 && item.id !== loadedFilm.id)
+                            }).map((item,i) => {
+                                return(
+                                    <Grid className="filmGrid" key={i} item md={2}>
+                                        <Link style={{textDecoration:"none"}} to={`/films/${item.id}`}>
+                                            <FilmCard 
+                                                key={item.id}
+                                                title={item.title}
+                                                genre={item.genre}
+                                                rating={item.rating}
+                                                img={item.img}
+                                            />
+                                        </Link>
+                                    </Grid> 
+                                )
+                            })
+                        }
+                    </Grid>
                 </Container>
                 </Box>
         )

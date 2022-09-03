@@ -7,6 +7,8 @@ import { useNavigate } from 'react-router';
 import { useState, useEffect } from 'react';
 import { NavLink } from "react-router-dom";
 import {fetchSerials, fetchFilms} from "../../redux/FilmsSlice"
+import LoginIcon from '@mui/icons-material/Login';
+import AccountCircleIcon from '@mui/icons-material/AccountCircle';
 
 
 const SearchAppBarButton = styled(Button)(({ theme }) => ({
@@ -40,6 +42,7 @@ const StyledSerch = styled(Autocomplete)(({ theme }) => ({
 export default function SearchAppBar() {
     const dispatch = useDispatch();
     const {films, serials} = useSelector(state => state.films);
+    const {user} = useSelector(state => state.user);
     const options = films.concat(serials)
     const navigate = useNavigate();
     const [searchValue, setSearchValue] = useState('');
@@ -107,6 +110,13 @@ export default function SearchAppBar() {
                 />
                 )}
             />
+            {user ? 
+            <SearchAppBarButton><NavLink to="/profile" style={({ isActive }) => ({ color: isActive ? '#c33f49' : 'inherit' })}><AccountCircleIcon style={{lineHeight:"10px"}}/></NavLink></SearchAppBarButton> :
+              <>
+                <SearchAppBarButton><NavLink to="/registration" style={({ isActive }) => ({ color: isActive ? '#c33f49' : 'inherit' })}>Зарегистрироваться</NavLink></SearchAppBarButton>
+                <SearchAppBarButton><NavLink to="/login" style={({ isActive }) => ({ color: isActive ? '#c33f49' : 'inherit' })}>Войти</NavLink></SearchAppBarButton>
+              </>
+            }
             </Toolbar>
         </Container>
         </AppBar>

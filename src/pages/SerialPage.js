@@ -1,6 +1,6 @@
 import '../../src/App.scss'
 import { useEffect} from 'react';
-import { useParams } from 'react-router-dom';
+import { useParams,Link } from 'react-router-dom';
 import CustomButton from '../components/customButton/CustomButton';
 import BasicRating from '../components/basicRating/BasicRating';
 import FilmParametr from '../components/filmParametr/FilmParametr';
@@ -12,11 +12,12 @@ import PlayArrowIcon from '@mui/icons-material/PlayArrow';
 import { Paper, Grid, Typography,Chip, Slider} from '@mui/material';
 import { useDispatch, useSelector } from "react-redux"
 import { fetchSerial } from "../redux/FilmsSlice"
+import FilmCard from '../components/filmCard/FIlmCard';
 
 const FilmPage = () => {
     const dispatch = useDispatch();
     const { LoadingStatus} = useSelector(state => state.films);
-    const {loadedSerial} = useSelector(state => state.films);
+    const {loadedSerial, serials} = useSelector(state => state.films);
     const {serialId} = useParams();
     
     useEffect(() => {
@@ -72,7 +73,7 @@ const FilmPage = () => {
                                 </Typography>
                             </div>
                             <div style={{display:"flex", alignItems:"center", marginTop:"10px"}}>
-                                <CustomButton size="large" variant="contained" style={{width:"300px", margin:"10px 0"}}>Смотреть фильм</CustomButton>
+                                <CustomButton size="large" variant="contained" style={{width:"300px", margin:"10px 0"}}>Смотреть сериал</CustomButton>
                                 <CustomButton variant="contained" style={{height:"39px", marginLeft:"14px"}}>
                                     <FavoriteBorderIcon fontSize='medium'/>
                                 </CustomButton>
@@ -94,7 +95,7 @@ const FilmPage = () => {
                                 <Chip variant="outlined" label={videoQuality} size="small" style={{margin:"0 10px", height:"18px"}}/>
                             </Typography>
                             <Typography component={'div'} variant="h6" style={{ marginTop:"20px"}}>
-                                Рейтинг фильма
+                                Рейтинг сериала
                             </Typography>
                             <BasicRating rating={rating}/> 
                         </Grid>
@@ -107,7 +108,7 @@ const FilmPage = () => {
                                 {rating}
                             </Typography>
                             <Typography component={'div'} fontFamily={'Roboto Condensed'} style={{marginTop:"10px", opacity:'0.5'}}>{marks} оценок</Typography>
-                            <CustomButton size="large" variant="contained" style={{margin:"10px 0", width:"100%"}}>Оценить фильм</CustomButton>
+                            <CustomButton size="large" variant="contained" style={{margin:"10px 0", width:"100%"}}>Оценить сериал</CustomButton>
                         </Grid>
                     </Grid>
                     <Grid container spacing={3} style={{marginTop:"20px"}}>
@@ -161,6 +162,30 @@ const FilmPage = () => {
                         </Grid>
                     </Grid > 
                     <BasicTabs review={review}/>
+                    <Typography component={'div'} variant="h5" style={{ margin:"20px 0px"}}>
+                        Похожие сериалы
+                    </Typography>
+                    <Grid container spacing={2} rowSpacing={3}>
+                        {
+                            serials.filter(item => {
+                                return (item.genre.indexOf(loadedSerial.genre) > -1 && item.id !== loadedSerial.id)
+                            }).map((item,i) => {
+                                return(
+                                    <Grid className="filmGrid" key={i} item md={2}>
+                                        <Link style={{textDecoration:"none"}} to={`/serials/${item.id}`}>
+                                            <FilmCard 
+                                                key={item.id}
+                                                title={item.title}
+                                                genre={item.genre}
+                                                rating={item.rating}
+                                                img={item.img}
+                                            />
+                                        </Link>
+                                    </Grid> 
+                                )
+                            })
+                        }
+                    </Grid>
                 </Container>
                 </Box>
         )
