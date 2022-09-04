@@ -1,7 +1,7 @@
 /* eslint-disable react/prop-types */
 import { Navigate } from "react-router-dom";
 import { login } from "../services/auth";
-import { Box, Container, Typography } from "@mui/material";
+import { Box, Container, Typography, TextField, Button } from "@mui/material";
 
 
 const LoginPage = (props) => {
@@ -9,11 +9,6 @@ const LoginPage = (props) => {
         email: '',
         password: ''
     }
-
-    // const clearFormData = () => {
-    //     formData.email = '';
-    //     formData.password = ''
-    // }
 
     const handleEmailChange = (event) => {
         formData.email = event.target.value
@@ -41,48 +36,27 @@ const LoginPage = (props) => {
             <Container style={{margin:"0 auto",width:"fit-content",height:"100vh"}}>
                 <div className="form_wrapper" style={{marginTop:"64px"}}>
                     <Typography style={{opacity:'0.5'}}>
-                        Заполните форму входа 
+                        АВТОРИЗАЦИЯ
                     </Typography>
-                    <form onSubmit={handleFormSubmit}>
-                        <div className="field">
-                            <label className="label">Адрес электронной почты</label>
-                            <div className="control">
-                                <input 
-                                    type="email" 
-                                    className="input"
-                                    onChange={handleEmailChange}
+                    <form onSubmit={handleFormSubmit} style={{display:"flex", flexDirection:"column"}}>
+                            <TextField 
+                                id="outlined-basic" 
+                                label="E-mail" 
+                                variant="outlined" 
+                                type="email"
+                                onChange={handleEmailChange}
+                                style={{margin:"20px 0px", width:"300px"}}
                                 />
-                            </div>
-                        </div>
-
-                        <div className="field">
-                            <label className="label">Пароль</label>
-                            <div className="control">
-                                <input 
-                                    type="password" 
-                                    className="input"
-                                    onChange={handlePasswordChange}
-                                />
-                            </div>
-                        </div>
-
-                        <div className="field">
-                            <div className="control">
-                                <input 
-                                    type="reset" 
-                                    className="input"
-                                    value="Сброс"
-                                />
-                            </div>
-                        </div>
-
-                        <div className="control">
-                            <input 
-                                type="submit" 
-                                className="button"
-                                value="Войти"
+                            <TextField 
+                                id="outlined-basic" 
+                                label="Password" 
+                                variant="outlined" 
+                                type="password"
+                                onChange={handlePasswordChange}
+                                style={{margin:"20px 0px", width:"300px"}}
                             />
-                        </div>
+
+                        <Button variant="contained" type="submit" >Войти</Button>
                     </form>
                 </div>
             </Container>

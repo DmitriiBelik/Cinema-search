@@ -8,7 +8,6 @@ import BasicTabs from '../components/basicTabs/BasicTabs'
 import BreadCrumbs from '../components/breadCrumbs/BreadCrumbs';
 import { Box, Container } from '@mui/system';
 import FavoriteBorderIcon from '@mui/icons-material/FavoriteBorder';
-import PlayArrowIcon from '@mui/icons-material/PlayArrow';
 import { Paper, Grid, Typography,Chip, Slider} from '@mui/material';
 import { useDispatch, useSelector } from "react-redux"
 import { fetchSerial } from "../redux/FilmsSlice"
@@ -18,6 +17,7 @@ const FilmPage = () => {
     const dispatch = useDispatch();
     const { LoadingStatus} = useSelector(state => state.films);
     const {loadedSerial, serials} = useSelector(state => state.films);
+    const {user} = useSelector(state => state.user);
     const {serialId} = useParams();
     
     useEffect(() => {
@@ -35,12 +35,12 @@ const FilmPage = () => {
 
     function renderFilm(film) {
         const {
-            rating, title, img, seasons,
+            rating, title, img, seasons,trailerSrc,
             translate, age, description, duration, 
             marks, audioTarcks, subtitles, videoQuality, 
             year, Country, fullGenre, tagline, director, 
             scenario, producers, operator, composer, painter, 
-            mounting, premiere, trailerDuration, actors, trailerImg, dubbing, review
+            mounting, premiere, actors, dubbing, review
         } = film 
         return(
                 <Box sx ={{bgcolor: 'background', paddingTop:'40px', margin:'0', color:'text.primary'}}>
@@ -73,10 +73,10 @@ const FilmPage = () => {
                                 </Typography>
                             </div>
                             <div style={{display:"flex", alignItems:"center", marginTop:"10px"}}>
-                                <CustomButton size="large" variant="contained" style={{width:"300px", margin:"10px 0"}}>Смотреть сериал</CustomButton>
-                                <CustomButton variant="contained" style={{height:"39px", marginLeft:"14px"}}>
+                                {user? 
+                                <CustomButton variant="contained" style={{height:"39px", marginLeft:"0px"}}>
                                     <FavoriteBorderIcon fontSize='medium'/>
-                                </CustomButton>
+                                </CustomButton>: ''}
                             </div>
                             <Typography component={'div'} style={{opacity:"0.5", marginTop:"20px"}}>
                                 Аудиодорожки: 
@@ -108,21 +108,11 @@ const FilmPage = () => {
                                 {rating}
                             </Typography>
                             <Typography component={'div'} fontFamily={'Roboto Condensed'} style={{marginTop:"10px", opacity:'0.5'}}>{marks} оценок</Typography>
-                            <CustomButton size="large" variant="contained" style={{margin:"10px 0", width:"100%"}}>Оценить сериал</CustomButton>
                         </Grid>
                     </Grid>
                     <Grid container spacing={3} style={{marginTop:"20px"}}>
                         <Grid item xs>
-                            <Paper 
-                                sx={{height:"200px", width:"330px", borderRadius: 5, position:"relative"}}
-                                elevation={8}
-                            >
-                                <img className='trailer_poster'
-                                    style={{height:'inherit', width:'inherit', borderRadius:'20px'}}
-                                    src={trailerImg}/>
-                                <Chip icon={<PlayArrowIcon/>} color='primary' label="Трейлер" style={{position:"absolute", left:"10px", bottom:"10px"}}/>
-                                <Chip color='primary' label={trailerDuration} size='small' style={{position:"absolute", right:"10px", bottom:"10px"}}/>
-                            </Paper>
+                        <iframe style={{borderRadius:"20px"}} width="320" height="200" src={trailerSrc} title="Видео на сайте №3. Как сделать свой плеер для видео. video.js" frameBorder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowFullScreen></iframe>
                         </Grid>
                         <Grid item xs={6} >
                             <FilmParametr param='Год производства' paramValue={year}/>

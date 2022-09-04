@@ -7,8 +7,8 @@ import { useNavigate } from 'react-router';
 import { useState, useEffect } from 'react';
 import { NavLink } from "react-router-dom";
 import {fetchSerials, fetchFilms} from "../../redux/FilmsSlice"
-import LoginIcon from '@mui/icons-material/Login';
 import AccountCircleIcon from '@mui/icons-material/AccountCircle';
+import FavoriteBorderOutlinedIcon from '@mui/icons-material/FavoriteBorderOutlined';
 
 
 const SearchAppBarButton = styled(Button)(({ theme }) => ({
@@ -76,7 +76,6 @@ export default function SearchAppBar() {
               <SearchAppBarButton color={'primary'}><NavLink to="/" style={({ isActive }) => ({ color: isActive ? '#c33f49' : 'inherit' })}>Фильмы</NavLink></SearchAppBarButton>
             <SearchAppBarButton><NavLink to="/serials" style={({ isActive }) => ({ color: isActive ? '#c33f49' : 'inherit' })}>Сериалы</NavLink></SearchAppBarButton>
             <SearchAppBarButton>Премьеры</SearchAppBarButton>
-            <SearchAppBarButton>Лучшие 250</SearchAppBarButton>
             <StyledSerch
                 style={{width:'320px'}}
                 size='small'
@@ -111,7 +110,12 @@ export default function SearchAppBar() {
                 )}
             />
             {user ? 
-            <SearchAppBarButton><NavLink to="/profile" style={({ isActive }) => ({ color: isActive ? '#c33f49' : 'inherit' })}><AccountCircleIcon style={{lineHeight:"10px"}}/></NavLink></SearchAppBarButton> :
+              <>
+                <SearchAppBarButton style={{lineHeight:"10px"}}>
+                  <NavLink to="/favorites" style={({ isActive }) => ({ color: isActive ? '#c33f49' : 'inherit' })}><FavoriteBorderOutlinedIcon fontSize='medium'/></NavLink>
+                </SearchAppBarButton>
+                <SearchAppBarButton style={{lineHeight:"10px"}}><NavLink to="/profile" style={({ isActive }) => ({ color: isActive ? '#c33f49' : 'inherit' })}><AccountCircleIcon/></NavLink></SearchAppBarButton>
+              </> :
               <>
                 <SearchAppBarButton><NavLink to="/registration" style={({ isActive }) => ({ color: isActive ? '#c33f49' : 'inherit' })}>Зарегистрироваться</NavLink></SearchAppBarButton>
                 <SearchAppBarButton><NavLink to="/login" style={({ isActive }) => ({ color: isActive ? '#c33f49' : 'inherit' })}>Войти</NavLink></SearchAppBarButton>

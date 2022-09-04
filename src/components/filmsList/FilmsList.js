@@ -59,16 +59,14 @@ const FilmsList = ({contentName}) => {
     const paginationChange = (event, value) => {
         setCurrentPage( value)    
     }
-
+  
     useEffect(() => {
         if(contentName == 'films'){
             content = films
         } else{
             content = serials
         }
-    },[contentName])    
-    useEffect(() => {
-        const arrayForSort = [...content]
+        let arrayForSort = [...content]
             switch(sortMethod){
                 case 'rating':
                     arrayForSort.sort((a,b) => b.rating - a.rating);

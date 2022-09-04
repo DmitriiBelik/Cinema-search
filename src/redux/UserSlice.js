@@ -1,7 +1,9 @@
 import { createSlice, } from "@reduxjs/toolkit";
 
 const initialState = {
-    user: {}
+    user: {},
+    favorites:{},
+    loadingStatus:'loading'
 }
 
 const userSlice = createSlice({
@@ -13,6 +15,10 @@ const userSlice = createSlice({
         },
         userLogOut:(state) => {
             state.user = {};
+        },
+        favoritesFetched:(state, action) => {
+            state.favorites = action.payload
+            state.loadingStatus = 'idle'
         }
     }
 });
@@ -20,7 +26,8 @@ const userSlice = createSlice({
 const {reducer, actions} = userSlice;
 export const {
     userFetched,
-    userLogOut
+    userLogOut,
+    favoritesFetched
 } = actions
 
 export default reducer;

@@ -16,7 +16,7 @@ const StyledRating = styled(Rating)(({ theme }) => ({
 
 
 const BasicRating = ({rating}) => {
-    const [value, setValue] = useState(+rating);
+    const [value] = useState(+rating);
 
     return (
         <Box
@@ -29,9 +29,7 @@ const BasicRating = ({rating}) => {
             size='large'
             name="simple-controlled"
             value={value}
-            onChange={(event, newValue) => {
-                setValue(newValue);
-            }}
+            readOnly 
         />
         </Box>
     );
