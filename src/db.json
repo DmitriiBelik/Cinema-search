@@ -3,6 +3,7 @@
         {
             "id": "1",
             "genre" : "Драма",
+            "type" : "films",
             "rating": "9.2",
             "title": "Зеленая Миля",
             "trailerSrc": "https://www.youtube.com/embed/TODt_q-_4C4",
@@ -47,6 +48,7 @@
         {
             "id": "2",
             "genre" : "Детектив",
+            "type" : "films",
             "trailerSrc": "https://www.youtube.com/embed/8VMvCavnFNw",
             "rating": "8.0",
             "title": "Достать ножи",
@@ -91,6 +93,7 @@
         {
             "id": "3",
             "genre" : "Криминал",
+            "type" : "films",
             "rating": "8.5",
             "trailerSrc": "https://www.youtube.com/embed/dABPCMxu074",
             "title": "Джентельмены",
@@ -135,6 +138,7 @@
         {
             "id": "4",
             "genre" : "Фантастика",
+            "type" : "films",
             "rating": "7.8",
             "trailerSrc": "https://www.youtube.com/embed/gbcVZgO4n4E",
             "title": "Мстители: Финал",
@@ -179,6 +183,7 @@
         {
             "id": "5",
             "genre" : "Биография",
+            "type" : "films",
             "rating": "8.2",
             "trailerSrc": "https://www.youtube.com/embed/fAD-D3P-s0I",
             "title": "Ford против Ferrari",
@@ -223,6 +228,7 @@
         {
             "id": "6",
             "genre" : "Биография",
+            "type" : "films",
             "rating": "8.4",
             "trailerSrc": "https://www.youtube.com/embed/e6b9urtUJt0",
             "title": "Зеленая книга",
@@ -269,6 +275,7 @@
         {
             "id": "7",
             "genre" : "Криминал",
+            "type" : "serials",
             "rating": "8.9",
             "trailerSrc": "https://www.youtube.com/embed/_ox1xXBOF-Q",
             "title": "Во все тяжкие",
@@ -310,6 +317,7 @@
         {
             "id": "8",
             "genre" : "Криминал",
+            "type" : "serials",
             "rating": "8.8",
             "trailerSrc": "https://www.youtube.com/embed/oEREyCOxsPM",
             "title": "Сопрано",
@@ -350,6 +358,7 @@
         {
             "id": "9",
             "genre" : "Фантастика",
+            "type" : "serials",
             "rating": "9.0",
             "trailerSrc": "https://www.youtube.com/embed/xTb3kepuvz4",
             "title": "Игра престолов",
@@ -391,6 +400,7 @@
         {
             "id": "10",
             "genre" : "Комедия",
+            "type" : "serials",
             "trailerSrc": "https://www.youtube.com/embed/s1rFXZcjQbg",
             "rating": "8.6",
             "title": "Голяк",
@@ -432,6 +442,7 @@
         {
             "id": "11",
             "genre" : "Комедия",
+            "type" : "serials",
             "rating": "8.7",
             "trailerSrc": "https://www.youtube.com/embed/TrsDIzWp5js",
             "title": "Клиника",
@@ -473,6 +484,7 @@
         {
             "id": "12",
             "genre" : "Комедия",
+            "type" : "serials",
             "rating": "8.7",
             "trailerSrc": "https://www.youtube.com/embed/oTVXmCL7yA4",
             "title": "Бесстыжие",

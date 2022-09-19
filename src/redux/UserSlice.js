@@ -3,7 +3,8 @@ import { createSlice, } from "@reduxjs/toolkit";
 const initialState = {
     user: {},
     favorites:{},
-    loadingStatus:'loading'
+    loadingStatus:'loading',
+    favoriteStatus: false
 }
 
 const userSlice = createSlice({
@@ -19,6 +20,12 @@ const userSlice = createSlice({
         favoritesFetched:(state, action) => {
             state.favorites = action.payload
             state.loadingStatus = 'idle'
+        },
+        favoriteStatusFalse: (state) => {
+            state.favoriteStatus = false
+        },
+        favoriteStatusTrue: (state) => {
+            state.favoriteStatus = true
         }
     }
 });
@@ -27,7 +34,10 @@ const {reducer, actions} = userSlice;
 export const {
     userFetched,
     userLogOut,
-    favoritesFetched
+    favoritesFetched,
+    favoriteStatusFalse,
+    favoriteStatusTrue
+
 } = actions
 
 export default reducer;

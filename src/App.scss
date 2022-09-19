@@ -75,3 +75,14 @@ a{
     align-items: center;
     width: fit-content;
 }
+
+.MuiContainer-root{
+    position: relative;
+}
+
+.MuiCircularProgress-root{
+    width: 300px !important;
+    height: 300px !important;
+    margin: 0 auto;
+    top: 20vh;
+}

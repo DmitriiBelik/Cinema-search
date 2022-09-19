@@ -6,7 +6,7 @@ import { Link} from "react-router-dom"
 export default function BreadCrumbs({category, title}) {
     let adress = '';
     if(category == 'Фильмы'){
-        adress = '/'
+        adress = '/films'
     } else{
         adress = '/serials'
     }

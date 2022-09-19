@@ -73,7 +73,7 @@ export default function SearchAppBar() {
               >
                   <NavLink to="/">КИНО ПАРК</NavLink>
               </Typography>
-              <SearchAppBarButton color={'primary'}><NavLink to="/" style={({ isActive }) => ({ color: isActive ? '#c33f49' : 'inherit' })}>Фильмы</NavLink></SearchAppBarButton>
+              <SearchAppBarButton color={'primary'}><NavLink to="/films" style={({ isActive }) => ({ color: isActive ? '#c33f49' : 'inherit' })}>Фильмы</NavLink></SearchAppBarButton>
             <SearchAppBarButton><NavLink to="/serials" style={({ isActive }) => ({ color: isActive ? '#c33f49' : 'inherit' })}>Сериалы</NavLink></SearchAppBarButton>
             <SearchAppBarButton>Премьеры</SearchAppBarButton>
             <StyledSerch
@@ -114,7 +114,7 @@ export default function SearchAppBar() {
                 <SearchAppBarButton style={{lineHeight:"10px"}}>
                   <NavLink to="/favorites" style={({ isActive }) => ({ color: isActive ? '#c33f49' : 'inherit' })}><FavoriteBorderOutlinedIcon fontSize='medium'/></NavLink>
                 </SearchAppBarButton>
-                <SearchAppBarButton style={{lineHeight:"10px"}}><NavLink to="/profile" style={({ isActive }) => ({ color: isActive ? '#c33f49' : 'inherit' })}><AccountCircleIcon/></NavLink></SearchAppBarButton>
+                <SearchAppBarButton style={{lineHeight:"10px"}}><NavLink to="/logout" style={({ isActive }) => ({ color: isActive ? '#c33f49' : 'inherit' })}><AccountCircleIcon/></NavLink></SearchAppBarButton>
               </> :
               <>
                 <SearchAppBarButton><NavLink to="/registration" style={({ isActive }) => ({ color: isActive ? '#c33f49' : 'inherit' })}>Зарегистрироваться</NavLink></SearchAppBarButton>

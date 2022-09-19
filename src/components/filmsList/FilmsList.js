@@ -44,8 +44,8 @@ const FilmsList = ({contentName}) => {
     const [currentPage, setCurrentPage] = useState(1);
     const [ItemsPerPage]=useState(12)
 
-    const lastCountryIndex = currentPage * ItemsPerPage;
-    const firstCountryIndex = lastCountryIndex - ItemsPerPage;
+    const lastItemIndex = currentPage * ItemsPerPage;
+    const firstItemIndex = lastItemIndex - ItemsPerPage;
     const pageCount = Math.ceil(films.length/ItemsPerPage);
 
     const genreChange = (event) => {
@@ -157,10 +157,10 @@ const FilmsList = ({contentName}) => {
     }   
     let chars = '';
     if(contentName =='films'){
-        const currentItem = films.slice(firstCountryIndex, lastCountryIndex)
+        const currentItem = films.slice(firstItemIndex, lastItemIndex)
         chars = renderItems(currentItem, 'films')
     } else{
-        const currentItem = serials.slice(firstCountryIndex, lastCountryIndex)
+        const currentItem = serials.slice(firstItemIndex, lastItemIndex)
         chars = renderItems(currentItem, 'serials')
     }
     let pagination = pageCount > 1 ? <Pagination

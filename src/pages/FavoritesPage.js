@@ -4,7 +4,7 @@ import { getList } from "../services/auth"
 import { useEffect } from "react"
 import { useSelector, useDispatch } from "react-redux"
 import { favoritesFetched } from "../redux/UserSlice"
-import { Grid, Box, Container } from "@mui/material"
+import { Grid, Box, Container, CircularProgress } from "@mui/material"
 import FilmCard from "../components/filmCard/FIlmCard"
 import { Link } from "react-router-dom"
 
@@ -22,7 +22,7 @@ const FavoritesPage = (props) => {
         const items = arr.map((item,i) => {
             return(
                 <Grid className="filmGrid" key={i} item md={2}>
-                    <Link style={{textDecoration:"none"}} to={`/films/${item['id']}`}>
+                    <Link style={{textDecoration:"none"}} to={`/${item['type']}/${item['id']}`}>
                         <FilmCard 
                             key={item['id']}
                             title={item['title']}
@@ -40,7 +40,7 @@ const FavoritesPage = (props) => {
             </Grid>
         )
     }
-    let favoritesFilms = '123'
+    let favoritesFilms = <CircularProgress />
     if(loadingStatus =='idle'){
       favoritesFilms = renderItems(favorites)  
     }

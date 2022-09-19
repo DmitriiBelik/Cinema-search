@@ -21,7 +21,7 @@ const DarkModeToggler = () => {
                 bottom: '20px',
                 left: '20px',
                 display: 'flex',
-                width: '120px',
+                width: '60px',
                 alignItems: 'center',
                 justifyContent: 'center',
                 bgcolor: 'primary.dark',
@@ -31,8 +31,7 @@ const DarkModeToggler = () => {
                 p: 2,
             }}
         >
-            {theme.palette.mode} mode
-            <IconButton sx={{ ml: 1 }} onClick={colorMode.toggleColorMode} color="inherit">
+            <IconButton  onClick={colorMode.toggleColorMode} color="inherit">
             {theme.palette.mode === 'dark' ? <Brightness7Icon /> : <Brightness4Icon />}
             </IconButton>
         </Box>

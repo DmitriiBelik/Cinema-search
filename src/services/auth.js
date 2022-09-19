@@ -1,5 +1,6 @@
+/* eslint-disable no-unused-vars */
 import {getAuth, createUserWithEmailAndPassword, signOut, signInWithEmailAndPassword} from 'firebase/auth'
-import {getDatabase, ref, push, set, get, query} from 'firebase/database'
+import {getDatabase, ref, push, set, get, query, remove} from 'firebase/database'
 
 export async function register(email, password) {
     try{
@@ -10,7 +11,8 @@ export async function register(email, password) {
         return oUC.user;
     }
     catch(err){
-        return err.code;
+        let errorElem = document.getElementById('error-block-id');
+        errorElem.innerHTML = "name: " + err.name + "message" + err.message;
     }
 }
 
@@ -20,7 +22,9 @@ export async function login (email, password) {
         return oUC.user;
     }
     catch(err){
-        return err.code;
+        let errorElem = document.getElementById('error-block-id');
+        errorElem.innerHTML = ''
+        errorElem.append("Пользователь не найден")
     }
 }
 
@@ -40,6 +44,18 @@ export async function addFavorite(user,film){
     const oFilm = oSnapshot.val();
     oFilm.key = oRef.key;
     return oFilm
+}
+
+export async function removeFavorite(user, filmID){
+    const oSnapshot = await get(query(ref(getDatabase(),`users/${user.uid}/favorites`)));
+    oSnapshot.forEach(item => {
+        if((item['_node']['children_']['root_']['left']['right']['left']['right']['value']['value_']) == filmID){
+            remove(ref(
+                getDatabase(),
+                `users/${user.uid}/favorites/${item['ref']['_path']['pieces_'][3]}`
+            ))
+        }
+    })
 }
 
 export async function getList(user){

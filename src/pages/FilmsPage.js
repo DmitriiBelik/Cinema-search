@@ -1,15 +1,15 @@
 import { Container,Box } from '@mui/system';
 import '../../src/App.scss'
-import MainContent from '../components/mainPageContent/MainContent';
+import FilmsList from '../components/filmsList/FilmsList';
 
-const MainPage = () => {
+const FilmsPage = () => {
     return(
             <Box sx ={{ bgcolor: 'background', paddingTop:'40px', margin:'0', color:'text.primary'}}>
                 <Container style={{height:"100vh",marginTop:'64px'}}>
-                    <MainContent/>
+                    <FilmsList contentName='films'/>
                 </Container>
             </Box>
     );
 }
 
-export default MainPage;
+export default FilmsPage;
